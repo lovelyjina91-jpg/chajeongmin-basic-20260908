@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>차정민 기초개념 다지기 · 영핏 지나티처</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    background: #f0f4f4; color: #2B3A3D; min-height: 100vh;
+    display: flex; justify-content: center; padding: 20px 14px;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  .wrap { width: 100%; max-width: 560px; }
+  .card { background: #fff; border-radius: 16px; padding: 26px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); margin-bottom: 14px; }
+  h1 { font-size: 1.25rem; color: #2F7C83; margin-bottom: 6px; line-height: 1.5; }
+  .sub { font-size: 0.9rem; color: #6B7B7E; margin-bottom: 18px; line-height: 1.85; }
+
+  /* ── 영핏 지나티처 로고 ── */
+  .logo { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+  .logo svg { flex: none; display: block; }
+  .logo .wordmark { line-height: 1.25; }
+  .logo .wordmark .n { font-size: 0.88rem; font-weight: bold; color: #235E64; letter-spacing: -0.2px; }
+  .logo .wordmark .t { display: block; font-size: 0.68rem; color: #8fa5a1; letter-spacing: 0.5px; }
+
+  /* 영어 문장은 띄어쓰기 단위로만 줄바꿈 */
+  .en, .choice, .ord-tile { overflow-wrap: normal; word-break: keep-all; hyphens: none; }
+
+  input[type=text] { width: 100%; padding: 13px; font-size: 1.05rem; border: 1.5px solid #DBE4E5; border-radius: 10px; font-family: inherit; }
+  input[type=text]:focus { outline: none; border-color: #2F7C83; }
+  .lbl { display: block; font-size: 0.85rem; font-weight: bold; color: #235E64; margin-bottom: 7px; }
+  .btn { display: block; width: 100%; margin-top: 12px; padding: 14px; font-size: 1.03rem; font-weight: bold; color: #fff; background: #2F7C83; border: none; border-radius: 10px; cursor: pointer; text-align: left; line-height: 1.55; font-family: inherit; }
+  .btn:disabled { background: #b8c4c2; cursor: default; }
+  .btn.sub-btn { background: #8fa5a1; }
+  .btn.center { text-align: center; }
+  .btn.done { background: #cfe0dc; color: #4d6a64; }
+  .btn.clinic { background: #b5762f; }
+  .btn .cnt { display: inline-block; font-size: 0.8rem; font-weight: normal; opacity: 0.92; margin-left: 4px; }
+
+  .progress { font-size: 0.85rem; color: #6B7B7E; margin-bottom: 4px; display: flex; justify-content: space-between; }
+  .srctag { display: inline-block; font-size: 0.75rem; color: #235E64; background: #E6F1F1; border-radius: 6px; padding: 3px 9px; margin-bottom: 10px; line-height: 1.5; }
+  .bar { height: 6px; background: #e3ecea; border-radius: 3px; margin-bottom: 14px; overflow: hidden; }
+  .bar > div { height: 100%; background: #2F7C83; border-radius: 3px; width: 0; transition: width .25s; }
+
+  .cardbox { background: #f2faf7; border: 1px solid #bfe0d6; border-left: 5px solid #2F7C83; border-radius: 12px; padding: 16px; margin-bottom: 14px; font-size: 0.95rem; line-height: 1.95; }
+  .cardbox h2 { font-size: 1.05rem; color: #235E64; margin-bottom: 10px; line-height: 1.5; }
+  .cardbox .ex { display: block; background: #fff; border-left: 3px solid #9dcfc3; border-radius: 6px; padding: 9px 11px; margin: 9px 0; font-size: 0.93rem; line-height: 1.95; }
+  .cardbox .my { display: block; background: #FFF6E8; border-left: 3px solid #e5cf8a; border-radius: 6px; padding: 9px 11px; margin: 9px 0; font-size: 0.93rem; line-height: 1.95; color: #4a4023; }
+  .cardbox .my b { color: #8a6400; }
+  .cardbox b { color: #235E64; }
+
+  details.tip { background: #f2faf7; border: 1px solid #bfe0d6; border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; font-size: 0.9rem; line-height: 1.9; }
+  details.tip summary { cursor: pointer; font-weight: bold; color: #235E64; font-size: 0.85rem; }
+  details.tip .inner { margin-top: 8px; }
+  details.tip b { color: #235E64; }
+  details.tip .ex { display: block; background: #fff; border-left: 3px solid #9dcfc3; border-radius: 6px; padding: 9px 11px; margin: 9px 0; }
+  details.tip .my { display: block; background: #FFF6E8; border-left: 3px solid #e5cf8a; border-radius: 6px; padding: 9px 11px; margin: 9px 0; color: #4a4023; }
+  details.tip .my b { color: #8a6400; }
+
+  .qtext { font-size: 1.06rem; line-height: 1.95; margin-bottom: 16px; }
+  .qtext .ko { display: block; font-size: 0.9em; color: #6B7B7E; margin-top: 3px; }
+  .choice { display: block; width: 100%; text-align: left; padding: 13px 14px; margin-bottom: 9px; font-size: 1.02rem; background: #f6f9f8; border: 1.5px solid #DBE4E5; border-radius: 10px; cursor: pointer; line-height: 1.6; font-family: inherit; color: #2B3A3D; }
+  .choice:active { background: #E6F1F1; }
+  .num { color: #2F7C83; font-weight: bold; margin-right: 7px; }
+  .keyhint { font-size: 0.78rem; color: #9aa8a5; text-align: center; margin-top: 10px; }
+
+  .score-big { font-size: 2rem; font-weight: bold; color: #2F7C83; text-align: center; margin: 10px 0; }
+  .exp { background: #f6f9f8; border-left: 4px solid #2F7C83; border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; font-size: 0.93rem; line-height: 1.9; }
+  .exp.wrong { border-left-color: #b5762f; background: #FFF6E8; }
+  .exp b { color: #235E64; }
+  .exp.wrong .exp-head b { color: #a2631f; }
+  .exp .ans-line { display: block; font-size: 0.85rem; color: #7a6a55; margin: 4px 0 6px; }
+
+  .whybox { background: #FFF6E8; border: 1px solid #e8d6b3; border-left: 5px solid #b5762f; border-radius: 12px; padding: 16px; margin-bottom: 14px; font-size: 0.95rem; line-height: 1.95; }
+  .whybox h2 { font-size: 1.02rem; color: #a2631f; margin-bottom: 10px; line-height: 1.5; }
+  .whybox .row { display: block; background: #fff; border-radius: 8px; padding: 9px 11px; margin: 8px 0; font-size: 0.93rem; line-height: 1.85; }
+  .whybox .row .k { color: #8a6400; font-weight: bold; }
+  .whybox b { color: #a2631f; }
+  .rulebox { background: #f2faf7; border: 1px solid #bfe0d6; border-left: 5px solid #2F7C83; border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; font-size: 0.94rem; line-height: 1.95; }
+  .rulebox .h { font-weight: bold; color: #235E64; display: block; margin-bottom: 5px; }
+  .rulebox b { color: #235E64; }
+
+  .ord-slot { min-height: 56px; background: #E6F1F1; border: 1.5px dashed #9dbdbd; border-radius: 10px; padding: 10px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+  .ord-ph { font-size: 0.85rem; color: #7f9a9a; }
+  .ord-pool { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  .ord-tile { font-size: 1.02rem; padding: 10px 13px; background: #f6f9f8; border: 1.5px solid #DBE4E5; border-radius: 9px; cursor: pointer; font-family: inherit; color: #2B3A3D; line-height: 1.35; }
+  .ord-tile.picked { background: #2F7C83; color: #fff; border-color: #2F7C83; }
+  .ord-help { font-size: 0.82rem; color: #6B7B7E; line-height: 1.75; margin-bottom: 10px; }
+
+  .saybar { position: fixed; left: 0; right: 0; bottom: 0; background: #235E64; color: #fff; padding: 13px 16px; display: flex; align-items: center; gap: 11px; justify-content: center; z-index: 60; box-shadow: 0 -2px 14px rgba(0,0,0,0.2); }
+  .saybar .ico { flex: none; width: 24px; height: 24px; }
+  .saybar .lbl { display: block; font-size: 0.75rem; opacity: 0.85; letter-spacing: 0.3px; }
+  .saybar .txt { display: block; font-size: 1.02rem; font-weight: bold; line-height: 1.5; word-break: keep-all; overflow-wrap: normal; }
+  .soundrow { display: flex; align-items: flex-start; gap: 10px; margin-top: 16px; padding: 12px 13px; background: #E6F1F1; border-radius: 10px; }
+  .soundrow input { width: 19px; height: 19px; margin-top: 2px; flex: none; accent-color: #2F7C83; }
+  .soundrow label { font-size: 0.88rem; font-weight: bold; color: #235E64; cursor: pointer; line-height: 1.6; }
+  .soundrow label .note { display: block; font-size: 0.8rem; color: #6B7B7E; font-weight: normal; margin-top: 2px; }
+  .footer { text-align: center; font-size: 0.78rem; color: #9aa8a5; padding: 8px 0 26px; line-height: 1.8; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ══════ 시작 (이름 + 영역 선택) ══════ -->
+  <div class="card" id="start-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="38" height="38" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span><span class="t">영어를 핏하다</span></div>
+    </div>
+    <h1>정민이의 기초개념 다지기<br>· 시간 전치사 + VOCA DAY 29 ·</h1>
+    <p class="sub">개념 카드 5장 + 문제 15문항 (5영역)<br>
+    오늘 배운 <b>전치사(시간)</b>과 <b>VOCA DAY 29</b>를 <b>5가지</b>로 정리했어요.<br>
+    전치사는 <b>범위의 크기</b>로, 낱말은 <b>문장 통째로</b> 익히면 훨씬 쉬워요!<br>
+    <b>개념 카드 1장 → 문제 3개</b>, 이렇게 5번이면 끝나요. <b>한 영역에 3분</b>이면 돼요.<br>
+    틀린 문제가 있으면 <b>왜 틀렸는지 설명 → 오답 클리닉 문제</b>가 이어서 나와요.<br>
+    답을 고르면 <b>정답 문장을 영어 소리로 들려줘요.</b> 소리 내어 따라 말해 보세요!<br>
+    한 영역이 끝나면 결과를 복사해서 지나티처에게 카톡으로 보내주세요.<br>
+    푼 기록은 자동 저장되니 중간에 꺼져도 이어서 할 수 있어요.</p>
+    <label class="lbl" for="name-input">이름</label>
+    <input type="text" id="name-input" placeholder="이름을 입력하세요" maxlength="20" autocomplete="off">
+    <div class="soundrow">
+      <input type="checkbox" id="sound-on" checked>
+      <label for="sound-on">정답 영어를 소리로 듣기<span class="note">답을 고르면 다음 문제로 넘어가기 전에 정답 문장을 원어민 소리로 들려줘요.</span></label>
+    </div>
+    <button class="btn sub-btn center" id="sound-test" style="margin-top:9px">소리 테스트 — 눌러서 영어가 들리는지 확인해요</button>
+    <p class="keyhint" id="sound-msg" style="margin-top:9px; min-height:18px"></p>
+    <p class="keyhint" style="margin-top:4px; line-height:1.7; color:#b5762f">
+      카톡에서 바로 열면 소리가 안 날 수 있어요.<br>
+      소리가 안 들리면 화면 <b>오른쪽 위 점 세 개</b>를 눌러<br>
+      <b>‘다른 브라우저로 열기’</b>(크롬 · 사파리)를 선택해 주세요.
+    </p>
+    <p class="sub" id="sec-pick-hint" style="margin:18px 0 -2px">아래에서 시작할 영역을 골라 주세요 (1영역부터 순서대로 푸는 걸 추천해요)</p>
+    <button class="btn sec-start" data-sec="0" disabled>1영역 시작 · at / on / in <span class="cnt">카드 1장 · 3문항</span></button>
+    <button class="btn sec-start" data-sec="1" disabled>2영역 시작 · for / during <span class="cnt">카드 1장 · 3문항</span></button>
+    <button class="btn sec-start" data-sec="2" disabled>3영역 시작 · until / by <span class="cnt">카드 1장 · 3문항</span></button>
+    <button class="btn sec-start" data-sec="3" disabled>4영역 시작 · 헷갈리는 동사 과거형 <span class="cnt">카드 1장 · 3문항</span></button>
+    <button class="btn sec-start" data-sec="4" disabled>5영역 시작 · VOCA DAY 29 <span class="cnt">카드 1장 · 3문항</span></button>
+    <p class="keyhint" id="sec-done-note" style="margin-top:12px"></p>
+  </div>
+
+  <!-- ══════ 이어하기 ══════ -->
+  <div class="card hidden" id="resume-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="38" height="38" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span><span class="t">영어를 핏하다</span></div>
+    </div>
+    <h1>이어서 풀 수 있어요</h1>
+    <p class="sub" id="resume-info"></p>
+    <button class="btn center" id="resume-btn">이어서 하기</button>
+    <button class="btn sub-btn center" id="restart-btn">처음부터 다시 하기</button>
+  </div>
+
+  <!-- ══════ 개념 카드 ══════ -->
+  <div class="card hidden" id="cards-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <div class="progress"><span id="card-num"></span><span id="card-sec"></span></div>
+    <div class="bar"><div id="card-bar"></div></div>
+    <div class="cardbox" id="cardbox"></div>
+    <button class="btn center" id="card-next">개념 확인 끝! 문제 3개 풀러 가기</button>
+    <button class="btn sub-btn center" id="card-skip">카드 건너뛰고 바로 문제 풀기</button>
+  </div>
+
+  <!-- ══════ 문제 ══════ -->
+  <div class="card hidden" id="quiz-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <div class="progress"><span id="prog-num"></span><span id="prog-pct"></span></div>
+    <div class="bar"><div id="bar-fill"></div></div>
+    <span class="srctag" id="srctag"></span>
+    <details class="tip" id="tipbox"><summary>개념 카드 다시 보기 (헷갈리면 눌러요)</summary><div class="inner" id="tipinner"></div></details>
+    <div class="qtext" id="qtext"></div>
+    <div id="choices"></div>
+    <p class="keyhint" id="keyhint">숫자키 1~4로도 선택할 수 있어요</p>
+  </div>
+
+  <!-- ══════ 영역 결과 ══════ -->
+  <div class="card hidden" id="sec-result-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <h1 id="sec-result-title"></h1>
+    <div class="score-big" id="sec-score"></div>
+    <p class="sub" id="sec-wrong" style="text-align:center"></p>
+    <button class="btn center" id="sec-copy-btn"></button>
+    <button class="btn clinic center hidden" id="clinic-start-btn"></button>
+    <button class="btn center" id="next-sec-btn" style="background:#38699e"></button>
+    <button class="btn sub-btn center" id="pick-sec-btn">영역 선택으로 돌아가기</button>
+    <div id="total-block" class="hidden" style="margin-top:22px; border-top:2px dashed #DBE4E5; padding-top:18px">
+      <p class="sub" style="text-align:center; margin-bottom:4px">전체 최종 결과</p>
+      <div class="score-big" id="total-score"></div>
+      <p class="sub" id="total-detail" style="text-align:center"></p>
+      <button class="btn center" id="total-copy-btn">전체 결과 한 번에 복사 (카톡용)</button>
+    </div>
+    <div style="margin-top:20px">
+      <p class="sub" style="margin-bottom:10px">이 영역 해설 — 맞은 문제도 한 번씩 읽어보세요!</p>
+      <div id="sec-explanations"></div>
+    </div>
+  </div>
+
+  <!-- ══════ 오답 클리닉 · 왜 틀렸을까 ══════ -->
+  <div class="card hidden" id="clinic-why-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <div class="progress"><span id="why-num"></span><span>오답 클리닉</span></div>
+    <div class="bar"><div id="why-bar"></div></div>
+    <div class="whybox" id="whybox"></div>
+    <div class="rulebox" id="rulebox"></div>
+    <button class="btn clinic center" id="why-next">이해했어요! 비슷한 문제 풀어보기</button>
+  </div>
+
+  <!-- ══════ 오답 클리닉 · 문제 ══════ -->
+  <div class="card hidden" id="clinic-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <div class="progress"><span id="cq-num"></span><span>오답 클리닉</span></div>
+    <div class="bar"><div id="cq-bar"></div></div>
+    <span class="srctag" id="cq-src"></span>
+    <div class="qtext" id="cq-text"></div>
+    <div id="cq-choices"></div>
+    <p class="keyhint" id="cq-keyhint">숫자키 1~4로도 선택할 수 있어요</p>
+  </div>
+
+  <!-- ══════ 오답 클리닉 결과 ══════ -->
+  <div class="card hidden" id="clinic-result-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <h1 id="cr-title">오답 클리닉 완료!</h1>
+    <div class="score-big" id="cr-score"></div>
+    <p class="sub" id="cr-msg" style="text-align:center"></p>
+    <button class="btn center" id="cr-copy-btn">클리닉 결과 복사 (카톡용)</button>
+    <button class="btn center" id="cr-next-btn" style="background:#38699e"></button>
+    <button class="btn sub-btn center" id="cr-pick-btn">영역 선택으로 돌아가기</button>
+    <div style="margin-top:20px">
+      <p class="sub" style="margin-bottom:10px">클리닉 해설</p>
+      <div id="cr-explanations"></div>
+    </div>
+  </div>
+
+  <div class="saybar hidden" id="saybar">
+    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#fff"></polygon>
+      <path d="M15.5 8.6a4.6 4.6 0 0 1 0 6.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+      <path d="M18.6 5.6a9 9 0 0 1 0 12.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <div><span class="lbl">정답 듣기</span><span class="txt" id="saytext"></span></div>
+  </div>
+
+  <div class="footer">
+    영핏 지나티처 · 영어를 핏하다<br>
+    점 · 면 · 공간 = at · on · in! 정민이 화이팅!
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ══════════ 결과 기록 (영핏 공통 전송코드 v1 — 변경 금지) ══════════ */
+var ENGFIT_SUBMIT_URL = "https://script.google.com/macros/s/AKfycbz5IC3cEtaBGW10qZhrjwtjdtGugmcmYb4ZTHS4k-1LOqTRYzW-LfoAPyFB_ShjAqNp/exec";
+async function engfitSubmit(r) {
+  var body = JSON.stringify(r);
+  try {
+    var res = await fetch(ENGFIT_SUBMIT_URL, { method: "POST", body: body });
+    var j = await res.json();
+    return j.ok === true;
+  } catch (e) {
+    try {
+      await fetch(ENGFIT_SUBMIT_URL, { method: "POST", mode: "no-cors", body: body });
+      return true;
+    } catch (e2) { return false; }
+  }
+}
+
+
+/* ══════════ 개념 카드 5장 (영역당 1장) ══════════ */
+var TIPS = {};
+
+var A1 = "카드 1. 시간 전치사 at · on · in";
+var B1 = "카드 2. for와 during 구별";
+var C1 = "카드 3. until과 by 구별";
+var D1 = "카드 4. 헷갈리는 동사 과거형";
+var E1 = "카드 5. VOCA DAY 29 — 자주 놓친 낱말";
+
+TIPS[A1] =
+"시간을 나타내는 전치사는 <b>범위의 크기</b>로 정해져요. 좁은 것부터 넓은 것 순서예요!" +
+"<span class='ex'><b>at</b> — 가장 좁아요. <b>정확한 시각</b>에 써요.<br>" +
+"<b>at</b> 9 o'clock · <b>at</b> noon · <b>at</b> night · <b>at</b> midnight</span>" +
+"<span class='ex'><b>on</b> — 중간이에요. <b>요일 · 날짜 · 특정한 날</b>에 써요.<br>" +
+"<b>on</b> Monday · <b>on</b> May 5th · <b>on</b> Christmas Day<br>" +
+"<b>on</b> Sunday morning (특정한 날의 아침도 on!)</span>" +
+"<span class='ex'><b>in</b> — 가장 넓어요. <b>월 · 계절 · 연도 · 오전/오후/저녁</b>에 써요.<br>" +
+"<b>in</b> May · <b>in</b> winter · <b>in</b> 2026<br>" +
+"<b>in</b> the morning · <b>in</b> the afternoon · <b>in</b> the evening</span>" +
+"<span class='my'>기억법: <b>점 → 면 → 공간</b><br>" +
+"<b>at</b>은 시계의 한 <b>점</b>, <b>on</b>은 달력의 한 <b>칸</b>, <b>in</b>은 넓은 <b>기간</b>이에요.<br><br>" +
+"조심할 예외 두 개!<br>" +
+"<b>at</b> night ⭕ (in the night ✗) — 밤은 at!<br>" +
+"<b>in</b> the morning ⭕ 이지만 <b>on</b> Monday morning ⭕ — 요일이 붙으면 on!</span>";
+
+TIPS[B1] =
+"<b>for</b>와 <b>during</b>은 둘 다 '~ 동안'이지만, <b>뒤에 오는 말</b>이 달라요." +
+"<span class='ex'><b>for + 숫자</b> (얼마나 오래인지)<br>" +
+"<b>for</b> three hours · <b>for</b> two days · <b>for</b> a week · <b>for</b> ten years<br>" +
+"'얼마나 오래?'라고 물으면 답이 <b>for</b>예요.</span>" +
+"<span class='ex'><b>during + 그 일이 벌어진 기간의 이름</b><br>" +
+"<b>during</b> the movie · <b>during</b> the vacation · <b>during</b> the class<br>" +
+"<b>during</b> the summer · <b>during</b> the meeting<br>" +
+"'언제?'라고 물으면 답이 <b>during</b>이에요.</span>" +
+"두 낱말을 나란히 놓고 보면 확실해요." +
+"<span class='ex'>I slept <b>for</b> two hours. (두 시간 동안 — <b>숫자</b>)<br>" +
+"I slept <b>during</b> the movie. (영화 보는 동안 — <b>사건 이름</b>)</span>" +
+"<span class='my'>판단 순서<br>" +
+"<b>① 뒤에 숫자가 있나? → for</b><br>" +
+"<b>② 뒤에 the가 붙은 사건 이름인가? → during</b><br><br>" +
+"VOCA DAY 29에도 <b>for a while</b>(잠시 동안)이 나왔죠? a while은 '얼마 동안'을 뜻해서 for를 써요!</span>";
+
+TIPS[C1] =
+"<b>until</b>과 <b>by</b>는 둘 다 '~까지'로 해석되지만 뜻이 <b>완전히</b> 달라요." +
+"<span class='ex'><b>until</b> — 그때까지 <b>계속</b> 이어져요<br>" +
+"I'll wait <b>until</b> six. (여섯 시까지 <b>계속</b> 기다린다)<br>" +
+"The store is open <b>until</b> 10 p.m. (10시까지 <b>계속</b> 열려 있다)</span>" +
+"<span class='ex'><b>by</b> — 그때까지 <b>한 번만</b> 끝내면 돼요 (마감)<br>" +
+"Please finish it <b>by</b> Friday. (금요일까지 <b>끝내라</b>)<br>" +
+"Come home <b>by</b> nine. (아홉 시까지 <b>와라</b>)</span>" +
+"구별하는 방법이 있어요. <b>동사</b>를 보세요!" +
+"<span class='ex'>계속되는 동작 → <b>until</b><br>" +
+"wait · stay · sleep · study · be open<br><br>" +
+"한 번에 끝나는 동작 → <b>by</b><br>" +
+"finish · come · arrive · send · return</span>" +
+"<span class='my'>기억법: <b>until은 쭉~ 계속, by는 딱! 한 번</b><br><br>" +
+"기다리는 것은 계속하는 일이니 <b>wait until</b>,<br>" +
+"끝내는 것은 한 번이면 되니 <b>finish by</b>예요!</span>";
+
+TIPS[D1] =
+"모양이 비슷해서 <b>서로 바뀌기 쉬운 동사</b>들이에요. 짝으로 묶어 외워요." +
+"<span class='ex'>가장 헷갈리는 짝 — <b>found</b><br>" +
+"<b>find</b>(찾다) – <b>found</b> – found<br>" +
+"<b>found</b>(설립하다) – <b>founded</b> – founded<br><br>" +
+"I <b>found</b> my key. (열쇠를 <b>찾았다</b>)<br>" +
+"They <b>founded</b> our school. (학교를 <b>설립했다</b>)</span>" +
+"<span class='ex'><b>overcome</b>(극복하다) – <b>overcame</b> – overcome<br>" +
+"come – came – come과 같은 방식이에요!<br>" +
+"He <b>overcame</b> his fear of water.</span>" +
+"<span class='ex'>규칙 변화도 함께 확인해요.<br>" +
+"escape → escape<b>d</b> (e로 끝나면 -d만)<br>" +
+"beg → be<b>gg</b>ed (단모음+단자음이라 g를 한 번 더)<br>" +
+"spin → <b>spun</b> · steal → <b>stole</b> · feed → <b>fed</b></span>" +
+"<span class='my'>VOCA DAY 29 44번에서 <b>found</b>라고 썼었죠? 뜻은 <b>정확하게</b> 알고 있었어요!<br>" +
+"'설립하다'의 과거는 <b>-ed</b>를 붙여 <b>founded</b>랍니다.<br><br>" +
+"구별법: <b>찾았으면 found, 세웠으면 founded!</b></span>";
+
+TIPS[E1] =
+"DAY 29에서 자주 놓친 낱말들이에요. <b>문장 속에서</b> 외우면 훨씬 오래 남아요." +
+"<span class='ex'><b>provide</b> 제공하다 — We <b>provide</b> guests with breakfast.<br>" +
+"<b>remind</b> 생각나게 하다 — Bats <b>remind</b> people of darkness.<br>" +
+"<b>expect</b> 기대하다 — Some people <b>expect</b> life to become easier.<br>" +
+"<b>detail</b> 세부 사항 — I remember every <b>detail</b> of the plan.</span>" +
+"<span class='ex'><b>spirit</b> 마음, 정신 — They are still young in <b>spirit</b>.<br>" +
+"s·p·i·r·i·t — <b>i</b>가 두 개예요!<br>" +
+"<b>disappoint</b> 실망시키다 — dis + appoint<br>" +
+"<b>curiosity</b> 호기심 — curious(호기심 있는)의 명사예요.</span>" +
+"<span class='ex'>두 낱말이 모인 표현<br>" +
+"<b>instead of</b> ~ 대신에 · <b>for a while</b> 잠시 동안<br>" +
+"<b>drop by</b> 잠깐 들르다 · <b>take place</b> 일어나다<br>" +
+"<b>end up with</b> 결국 ~하게 되다 · <b>would like to</b> ~하고 싶다</span>" +
+"<span class='my'>정민이가 DAY 29 앞부분에서 <b>spin · awful · candle · army · shock · express · cell · guest · trick</b>을<br>" +
+"정확하게 골랐어요! 낱말 뜻은 잘 알고 있답니다.<br><br>" +
+"뒷부분은 <b>영어로 직접 쓰는</b> 문제라 더 어려웠던 거예요. 고르기보다 쓰기가 훨씬 어렵답니다.<br>" +
+"요령: 낱말만 외우지 말고 <b>문장 통째로</b> 소리 내어 읽어요!</span>";
+
+/* ══════════ 문제 15문항 (5영역 · 영역당 3문항) ══════════ */
+var ALL = [
+/* ───────── 1영역 · at / on / in (1~3) ───────── */
+{"src":A1,"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>The class starts ( ) nine o'clock.</b><span class='ko'>(그 수업은 9시에 시작한다.)</span>","choices":["at","on","in","for"],"answer":"at","exp":"정답은 <b class='en'>at</b>!<br>· <b>정확한 시각</b> 앞에는 <b>at</b>을 써요. 시계의 한 <b>점</b>을 가리키는 느낌이에요.<br>· <b>on</b>은 요일·날짜에 써요. (on Monday)<br>· <b>in</b>은 월·계절·연도에 써요. (in May)<br>· <b>for</b>는 '~ 동안'이라는 뜻이라 시각과 맞지 않아요.<br>· at을 쓰는 무리: at nine · at noon · at <b>night</b> · at midnight<br>· 기억법: <b>점 → 면 → 공간</b> = at → on → in"},
+{"src":A1,"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>We have a test ( ) Monday.</b><span class='ko'>(우리는 월요일에 시험이 있다.)</span>","choices":["on","at","in","during"],"answer":"on","exp":"정답은 <b class='en'>on</b>!<br>· <b>요일 · 날짜 · 특정한 날</b> 앞에는 <b>on</b>을 써요.<br>· <b>at</b>은 정확한 시각에 써요. (at nine)<br>· <b>in</b>은 월·계절·연도에 써요. (in winter)<br>· <b>during</b>은 뒤에 <b>the</b>가 붙은 사건 이름이 와요. (during the class)<br>· on을 쓰는 무리: on Monday · on May 5th · on Christmas Day<br>· 주의! <b>on Monday morning</b> — 요일이 붙으면 morning 앞에도 on이에요!"},
+{"src":A1,"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>It gets very cold ( ) winter.</b><span class='ko'>(겨울에는 매우 추워진다.)</span>","choices":["in","at","on","by"],"answer":"in","exp":"정답은 <b class='en'>in</b>!<br>· <b>계절 · 월 · 연도</b>처럼 넓은 기간 앞에는 <b>in</b>을 써요.<br>· <b>at</b>은 정확한 시각, <b>on</b>은 요일·날짜에 써요.<br>· <b>by</b>는 '~까지(마감)'라는 뜻이에요.<br>· in을 쓰는 무리: in winter · in May · in 2026 · in the morning<br>· 1영역 끝! <b>at(점) → on(면) → in(공간)</b> 순서로 넓어져요."},
+/* ───────── 2영역 · for / during (4~6) ───────── */
+{"src":B1,"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>I studied English ( ) three hours.</b><span class='ko'>(나는 세 시간 동안 영어를 공부했다.)</span>","choices":["for","during","at","on"],"answer":"for","exp":"정답은 <b class='en'>for</b>!<br>· 뒤에 <b>three hours</b>라는 <b>숫자</b>가 왔죠? '얼마나 오래'를 나타낼 때는 <b>for</b>예요.<br>· <b>during</b>은 뒤에 <b>the</b>가 붙은 사건 이름이 와요. (during the class)<br>· <b>at</b>은 정확한 시각, <b>on</b>은 요일에 써요.<br>· for를 쓰는 무리: for three hours · for two days · for a week · for ten years<br>· 판단 순서: <b>뒤에 숫자가 있나? → for!</b>"},
+{"src":B1,"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>I fell asleep ( ) the movie.</b><span class='ko'>(나는 영화를 보는 동안 잠이 들었다.)</span>","choices":["during","for","at","in"],"answer":"during","exp":"정답은 <b class='en'>during</b>!<br>· 뒤에 <b>the movie</b>라는 <b>사건 이름</b>이 왔죠? '언제 그 일이 있었나'를 나타낼 때는 <b>during</b>이에요.<br>· <b>for</b>는 뒤에 숫자가 와요. (for two hours)<br>· <b>at</b>과 <b>in</b>은 시각·기간을 나타내는 다른 전치사예요.<br>· during을 쓰는 무리: during the movie · during the class · during the vacation<br>· 나란히 보면 확실해요 — for <b>two hours</b> / during <b>the movie</b>"},
+{"src":B1,"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>She stayed in Seoul ( ) the summer vacation.</b><span class='ko'>(그녀는 여름 방학 동안 서울에 머물렀다.)</span>","choices":["during","for","on","until"],"answer":"during","exp":"정답은 <b class='en'>during</b>!<br>· 뒤에 <b>the summer vacation</b>이라는 사건 이름이 왔으니 <b>during</b>이에요.<br>· <b>for</b>는 for two weeks처럼 숫자와 함께 써요.<br>· <b>on</b>은 요일·날짜, <b>until</b>은 '~까지 계속'이라는 뜻이에요.<br>· <b>the</b>가 보이면 during일 가능성이 높아요!<br>· 참고: VOCA DAY 29의 <b>for a while</b>(잠시 동안)은 a while이 '얼마 동안'이라 for를 써요.<br>· 2영역 끝! <b>숫자면 for, 사건 이름이면 during</b>"},
+/* ───────── 3영역 · until / by (7~9) ───────── */
+{"src":C1,"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>I'll wait ( ) six o'clock.</b><span class='ko'>(나는 여섯 시까지 기다릴 것이다.)</span>","choices":["until","by","for","during"],"answer":"until","exp":"정답은 <b class='en'>until</b>!<br>· <b>wait</b>(기다리다)는 <b>계속</b>되는 동작이에요. 여섯 시까지 쭉 기다리는 거죠. 그래서 <b>until</b>!<br>· <b>by</b>는 '그때까지 <b>한 번</b> 끝내라'는 마감의 뜻이에요.<br>· <b>for</b>는 뒤에 숫자, <b>during</b>은 뒤에 사건 이름이 와요.<br>· until과 어울리는 동사: wait · stay · sleep · study · be open<br>· 기억법: <b>until은 쭉~ 계속, by는 딱! 한 번</b>"},
+{"src":C1,"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>Please finish your homework ( ) Friday.</b><span class='ko'>(금요일까지 숙제를 끝내 주세요.)</span>","choices":["by","until","for","at"],"answer":"by","exp":"정답은 <b class='en'>by</b>!<br>· <b>finish</b>(끝내다)는 <b>한 번</b>에 끝나는 동작이에요. 금요일까지 한 번만 끝내면 되죠. 그래서 <b>by</b>!<br>· <b>until</b>은 '금요일까지 계속 끝내고 있어라'가 되어 말이 안 돼요.<br>· <b>for</b>와 <b>at</b>은 여기에 어울리지 않아요.<br>· by와 어울리는 동사: finish · come · arrive · send · return<br>· 구별법: <b>동사가 계속되나, 한 번에 끝나나?</b>"},
+{"src":C1,"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>The store is open ( ) ten p.m.</b><span class='ko'>(그 가게는 밤 10시까지 열려 있다.)</span>","choices":["until","by","for","on"],"answer":"until","exp":"정답은 <b class='en'>until</b>!<br>· <b>be open</b>(열려 있다)은 <b>계속</b>되는 상태예요. 10시까지 쭉 열려 있는 거죠. 그래서 <b>until</b>!<br>· <b>by</b>를 쓰면 '10시까지 한 번 열어라'가 되어 어색해요.<br>· <b>for</b>는 숫자와, <b>on</b>은 요일과 함께 써요.<br>· 3영역 끝! <b>계속되면 until, 한 번 끝내면 by</b>"},
+/* ───────── 4영역 · 헷갈리는 동사 과거형 (10~12) ───────── */
+{"src":D1,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>They ( ) our school ten years ago.</b><span class='ko'>(그들은 10년 전에 우리 학교를 설립했다.)</span>","choices":["founded","found","finded","foundeded"],"answer":"founded","exp":"정답은 <b class='en'>founded</b>!<br>· <b>found</b>(설립하다)는 규칙 동사예요. 과거는 <b>-ed</b>를 붙여 <b>founded</b>!<br>· <b>found</b>는 정답이 아니에요 — 이건 <b>find</b>(찾다)의 과거형이에요. '학교를 찾았다'가 되어 버려요!<br>· <b>finded</b>와 <b>foundeded</b>는 없는 모양이에요.<br>· DAY 29 44번에 나왔던 문장이에요. 뜻은 <b>정확하게</b> 알고 있었답니다!<br>· 짝으로 외워요<br><b>find</b>(찾다) – found – found<br><b>found</b>(설립하다) – <b>founded</b> – founded<br>· 구별법: <b>찾았으면 found, 세웠으면 founded!</b>"},
+{"src":D1,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>He ( ) his fear of water.</b><span class='ko'>(그는 물에 대한 두려움을 극복했다.)</span>","choices":["overcame","overcomed","overcome","overcaming"],"answer":"overcame","exp":"정답은 <b class='en'>overcame</b>!<br>· <b>overcome</b>(극복하다)의 과거는 <b>overcame</b>이에요. <b>come – came – come</b>과 같은 방식이랍니다!<br>· <b>overcomed</b>는 정답이 아니에요 — 불규칙 동사라 -ed를 붙이지 않아요.<br>· <b>overcome</b>은 현재형이에요. 문장이 과거니까 overcame!<br>· <b>overcaming</b>은 없는 모양이에요.<br>· DAY 29 45번에 나왔던 문장이에요.<br>· 안에 <b>come</b>이 숨어 있어요! come → came, overcome → over<b>came</b>"},
+{"src":D1,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>An angry group of zebras ( ) from the zoo.</b><span class='ko'>(화가 난 얼룩말 무리가 동물원에서 탈출했다.)</span>","choices":["escaped","escapeed","escapped","escape"],"answer":"escaped","exp":"정답은 <b class='en'>escaped</b>!<br>· escape는 <b>-e로 끝나는</b> 규칙 동사예요. e가 이미 있으니 <b>-d만</b> 붙여요 → escape<b>d</b><br>· <b>escapeed</b>는 e를 두 번 썼어요.<br>· <b>escapped</b>는 p를 두 번 썼어요. escape는 자음을 반복하지 않아요.<br>· <b>escape</b>는 현재형이에요. 문장이 과거예요.<br>· DAY 29 41번에 나왔던 문장이에요.<br>· 같은 무리: like → liked · use → used · live → lived<br>· 4영역 끝! <b>불규칙인지 규칙인지 먼저 확인해요.</b>"},
+/* ───────── 5영역 · VOCA DAY 29 (13~15) ───────── */
+{"src":E1,"q":"빈칸에 알맞은 낱말을 고르세요.<br><b class='en'>We ( ) guests with breakfast.</b><span class='ko'>(우리는 손님들에게 아침 식사를 제공한다.)</span>","choices":["provide","express","remember","spin"],"answer":"provide","exp":"정답은 <b class='en'>provide</b>!<br>· <b>provide A with B</b> = A에게 B를 제공하다. 통째로 외우면 편해요!<br>· <b>express</b>는 '(감정·의견을) 표현하다'예요.<br>· <b>remember</b>는 '기억하다', <b>spin</b>은 '돌다, 회전하다'예요.<br>· DAY 29 24번에 나왔던 문장이에요.<br>· 정민이가 앞부분에서 <b>express · spin</b>을 정확하게 골랐어요! 뜻은 잘 알고 있답니다."},
+{"src":E1,"q":"빈칸에 알맞은 낱말을 고르세요.<br><b class='en'>Bats ( ) people of darkness and fear.</b><span class='ko'>(박쥐는 사람들에게 어둠과 두려움을 생각나게 한다.)</span>","choices":["remind","remember","expect","provide"],"answer":"remind","exp":"정답은 <b class='en'>remind</b>!<br>· <b>remind A of B</b> = A에게 B를 생각나게 하다. of와 짝을 이뤄요!<br>· <b>remember</b>는 '(내가) 기억하다'예요. 남에게 생각나게 하는 건 remind랍니다.<br>· <b>expect</b>는 '기대하다', <b>provide</b>는 '제공하다'예요.<br>· DAY 29 27번에 나왔던 문장이에요.<br>· 짝으로 외워요: re<b>member</b>(내가 기억) ↔ re<b>mind</b>(남에게 생각나게)"},
+{"src":E1,"q":"빈칸에 알맞은 낱말을 고르세요.<br><b class='en'>They are still young in ( ).</b><span class='ko'>(그들은 아직 마음은 젊다.)</span>","choices":["spirit","spin","similar","steal"],"answer":"spirit","exp":"정답은 <b class='en'>spirit</b>!<br>· <b>spirit</b> = 마음, 정신, 영혼. <b>young in spirit</b> = 마음은 젊은<br>· s-p-<b>i</b>-r-<b>i</b>-t — <b>i</b>가 두 개예요!<br>· <b>spin</b>은 '돌다, 회전하다', <b>similar</b>는 '비슷한', <b>steal</b>은 '훔치다'예요.<br>· DAY 29 48번에 나왔던 문장이에요.<br>· sp로 시작하는 낱말이 여러 개라 헷갈리기 쉬워요. <b>뒷부분까지</b> 꼼꼼히 봐요!<br>· 5영역 끝! 15문항 모두 수고했어요."}
+];
+
+/* ══════════ 오답 클리닉 문제 (문항별 1:1 대응) ══════════ */
+var CLINIC = [
+{"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>I usually go to bed ( ) eleven.</b><span class='ko'>(나는 보통 11시에 잠자리에 든다.)</span>","choices":["at","on","in","for"],"answer":"at","exp":"정답은 <b class='en'>at</b>!<br>· <b>정확한 시각</b> 앞에는 at을 써요.<br>· at nine · at noon · at night · at midnight"},
+{"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>My birthday is ( ) May 5th.</b><span class='ko'>(내 생일은 5월 5일이다.)</span>","choices":["on","at","in","by"],"answer":"on","exp":"정답은 <b class='en'>on</b>!<br>· <b>날짜</b> 앞에는 on을 써요. (월만 있으면 <b>in</b> May!)<br>· on Monday · on May 5th · on Christmas Day"},
+{"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>I read many books ( ) the morning.</b><span class='ko'>(나는 아침에 책을 많이 읽는다.)</span>","choices":["in","at","on","during"],"answer":"in","exp":"정답은 <b class='en'>in</b>!<br>· <b>in the morning · in the afternoon · in the evening</b>은 한 세트예요.<br>· 단, <b>at night</b>은 예외로 at을 써요!<br>· 그리고 요일이 붙으면 <b>on</b> Monday morning이 돼요."},
+{"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>He lived in Busan ( ) ten years.</b><span class='ko'>(그는 10년 동안 부산에 살았다.)</span>","choices":["for","during","at","by"],"answer":"for","exp":"정답은 <b class='en'>for</b>!<br>· 뒤에 <b>ten years</b>라는 숫자가 왔어요. '얼마나 오래'는 <b>for</b>!<br>· 판단 순서: <b>뒤에 숫자가 있나? → for</b>"},
+{"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>Don't talk ( ) the class.</b><span class='ko'>(수업 시간 동안에는 떠들지 마라.)</span>","choices":["during","for","at","on"],"answer":"during","exp":"정답은 <b class='en'>during</b>!<br>· 뒤에 <b>the class</b>라는 사건 이름이 왔어요. '언제'는 <b>during</b>!<br>· <b>the</b>가 보이면 during일 가능성이 높아요."},
+{"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>We stayed there ( ) a while.</b><span class='ko'>(우리는 잠시 동안 그곳에 머물렀다.)</span>","choices":["for","during","at","until"],"answer":"for","exp":"정답은 <b class='en'>for</b>!<br>· <b>for a while</b> = 잠시 동안. VOCA DAY 29 40번에 나왔던 표현이에요!<br>· a while은 '얼마 동안'이라는 길이를 뜻해서 for를 써요."},
+{"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>She stayed at home ( ) noon.</b><span class='ko'>(그녀는 정오까지 집에 머물렀다.)</span>","choices":["until","by","for","during"],"answer":"until","exp":"정답은 <b class='en'>until</b>!<br>· <b>stay</b>(머물다)는 계속되는 동작이에요. 정오까지 쭉 머물렀으니 <b>until</b>!<br>· until과 어울리는 동사: wait · stay · sleep · study · be open"},
+{"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>Please come home ( ) nine.</b><span class='ko'>(아홉 시까지 집에 와라.)</span>","choices":["by","until","for","during"],"answer":"by","exp":"정답은 <b class='en'>by</b>!<br>· <b>come</b>(오다)은 한 번에 끝나는 동작이에요. 아홉 시까지 한 번 오면 되죠. 그래서 <b>by</b>!<br>· by와 어울리는 동사: finish · come · arrive · send · return"},
+{"q":"빈칸에 알맞은 전치사를 고르세요.<br><b class='en'>Send me the file ( ) tomorrow.</b><span class='ko'>(내일까지 그 파일을 보내 주세요.)</span>","choices":["by","until","for","at"],"answer":"by","exp":"정답은 <b class='en'>by</b>!<br>· <b>send</b>(보내다)는 한 번에 끝나는 동작이라 <b>by</b>(마감)를 써요.<br>· 기억법: <b>until은 쭉~ 계속, by는 딱! 한 번</b>"},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>I ( ) my key under the desk yesterday.</b><span class='ko'>(나는 어제 책상 아래에서 열쇠를 찾았다.)</span>","choices":["found","founded","finded","find"],"answer":"found","exp":"정답은 <b class='en'>found</b>!<br>· 여기는 <b>find</b>(찾다)의 과거형이에요 → found<br>· <b>founded</b>는 '설립했다'라는 다른 뜻이에요!<br>· 구별법: <b>찾았으면 found, 세웠으면 founded!</b>"},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>She ( ) many difficulties last year.</b><span class='ko'>(그녀는 작년에 많은 어려움을 극복했다.)</span>","choices":["overcame","overcomed","overcome","overcames"],"answer":"overcame","exp":"정답은 <b class='en'>overcame</b>!<br>· overcome은 불규칙 동사예요 — <b>overcome – overcame – overcome</b><br>· 안에 <b>come</b>이 있어요! come → came이니 overcome → over<b>came</b>"},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>The little boy ( ) for some food.</b><span class='ko'>(그 어린 소년은 음식을 구걸했다.)</span>","choices":["begged","beged","begd","beg"],"answer":"begged","exp":"정답은 <b class='en'>begged</b>!<br>· beg는 <b>단모음 + 단자음</b>으로 끝나요. 자음 <b>g</b>를 한 번 더 쓰고 -ed → be<b>gg</b>ed<br>· VOCA DAY 29 13번의 <b>beg</b>(간청하다, 구걸하다)예요!"},
+{"q":"빈칸에 알맞은 낱말을 고르세요.<br><b class='en'>I remember every ( ) of the plan.</b><span class='ko'>(나는 그 계획의 모든 세부 사항을 기억한다.)</span>","choices":["detail","fabric","candle","brain"],"answer":"detail","exp":"정답은 <b class='en'>detail</b>!<br>· <b>detail</b> = 세부 사항, 자세한 내용<br>· fabric은 '천, 직물', candle은 '양초', brain은 '뇌'예요.<br>· DAY 29 28번에 나왔던 문장이에요."},
+{"q":"빈칸에 알맞은 낱말을 고르세요.<br><b class='en'>I don't want to ( ) her.</b><span class='ko'>(나는 그녀를 실망시키고 싶지 않다.)</span>","choices":["disappoint","disappear","express","provide"],"answer":"disappoint","exp":"정답은 <b class='en'>disappoint</b>!<br>· <b>disappoint</b> = 실망시키다<br>· <b>disappear</b>는 '사라지다'예요! 앞부분이 같아서 헷갈리기 쉬워요.<br>· dis + <b>appoint</b> / dis + <b>appear</b> — 뒷부분으로 구별해요."},
+{"q":"빈칸에 알맞은 낱말을 고르세요.<br><b class='en'>I'd like to go home early ( ) staying here.</b><span class='ko'>(나는 여기 머무는 대신에 집에 일찍 가고 싶다.)</span>","choices":["instead of","for a while","take place","drop by"],"answer":"instead of","exp":"정답은 <b class='en'>instead of</b>!<br>· <b>instead of</b> = ~ 대신에<br>· <b>for a while</b>은 '잠시 동안', <b>take place</b>는 '일어나다', <b>drop by</b>는 '잠깐 들르다'예요.<br>· DAY 29 39번에 나왔던 표현이에요."}
+];
+
+/* ══════════ 정답 영어 읽어 주기 ══════════ */
+var SAY_ALL = [
+"The class starts at nine o'clock.",
+"We have a test on Monday.",
+"It gets very cold in winter.",
+"I studied English for three hours.",
+"I fell asleep during the movie.",
+"She stayed in Seoul during the summer vacation.",
+"I will wait until six o'clock.",
+"Please finish your homework by Friday.",
+"The store is open until ten p.m.",
+"They founded our school ten years ago.",
+"He overcame his fear of water.",
+"An angry group of zebras escaped from the zoo.",
+"We provide guests with breakfast.",
+"Bats remind people of darkness and fear.",
+"They are still young in spirit."
+];
+var SAY_CLINIC = [
+"I usually go to bed at eleven.",
+"My birthday is on May fifth.",
+"I read many books in the morning.",
+"He lived in Busan for ten years.",
+"Don't talk during the class.",
+"We stayed there for a while.",
+"She stayed at home until noon.",
+"Please come home by nine.",
+"Send me the file by tomorrow.",
+"I found my key under the desk yesterday.",
+"She overcame many difficulties last year.",
+"The little boy begged for some food.",
+"I remember every detail of the plan.",
+"I don't want to disappoint her.",
+"I would like to go home early instead of staying here."
+];
+(function attachSay() {
+  ALL.forEach(function (q, i) { q.say = SAY_ALL[i] || ""; });
+  CLINIC.forEach(function (q, i) { q.say = SAY_CLINIC[i] || ""; });
+})();
+
+/* ══════════ 영역 · 카드 배치 ══════════ */
+var SECTIONS = [
+  { name: "1영역 · at / on / in",             start: 0,  end: 3,  cards: [A1] },
+  { name: "2영역 · for / during",             start: 3,  end: 6,  cards: [B1] },
+  { name: "3영역 · until / by",               start: 6,  end: 9,  cards: [C1] },
+  { name: "4영역 · 헷갈리는 동사 과거형",       start: 9,  end: 12, cards: [D1] },
+  { name: "5영역 · VOCA DAY 29",              start: 12, end: 15, cards: [E1] }
+];
+var NSEC = SECTIONS.length;
+function secIndex(i) {
+  for (var s = 0; s < NSEC; s++) { if (i < SECTIONS[s].end) return s; }
+  return NSEC - 1;
+}
+var CARD_AT = { 0: A1, 3: B1, 6: C1, 9: D1, 12: E1 };
+
+/* ══════════ 정답 위치 균등 분산 (같은 위치 3연속 금지) ══════════ */
+function shuffleArr(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function balancedAssign(n, k) {
+  var pool = [];
+  var base = Math.floor(n / k);
+  for (var p = 0; p < k; p++) { for (var c = 0; c < base; c++) pool.push(p); }
+  var remainder = n - pool.length;
+  var extra = shuffleArr([0, 1, 2, 3]).slice(0, remainder);
+  extra.forEach(function (p) { pool.push(p); });
+  return shuffleArr(pool);
+}
+function hasTripleRun(arr) {
+  for (var i = 2; i < arr.length; i++) {
+    if (arr[i] === arr[i - 1] && arr[i - 1] === arr[i - 2]) return true;
+  }
+  return false;
+}
+function balancedNoTriple(n, k) {
+  var t = balancedAssign(n, k);
+  for (var tries = 0; tries < 300 && hasTripleRun(t); tries++) t = balancedAssign(n, k);
+  return t;
+}
+function prepareList(list, from, to) {
+  var mcIdx = [];
+  for (var idx = from; idx < to; idx++) {
+    var q = list[idx];
+    if (q.t === "ord") {
+      var ti = [];
+      for (var z = 0; z < q.tiles.length; z++) ti.push(z);
+      q.shuffled = shuffleArr(ti);
+    } else { mcIdx.push(idx); }
+  }
+  var targets = balancedNoTriple(mcIdx.length, 4);
+  mcIdx.forEach(function (idx, mi) {
+    var q = list[idx];
+    var sh = shuffleArr(q.choices);
+    var cur = sh.indexOf(q.answer);
+    var tg = targets[mi];
+    var tmp = sh[tg]; sh[tg] = sh[cur]; sh[cur] = tmp;
+    q.shuffled = sh;
+  });
+}
+(function prepareAll() {
+  SECTIONS.forEach(function (sec) {
+    prepareList(ALL, sec.start, sec.end);
+    prepareList(CLINIC, sec.start, sec.end);
+  });
+})();
+
+/* ══════════ 정답 영어 소리로 듣기 ══════════ */
+var SOUND_KEY = "engfit-sound-on";
+var soundOn = true;
+try { soundOn = localStorage.getItem(SOUND_KEY) !== "off"; } catch (e) {}
+
+var EN_VOICE = null;
+function pickVoice() {
+  try {
+    var vs = window.speechSynthesis.getVoices() || [];
+    var en = vs.filter(function (v) { return /^en/i.test(v.lang || ""); });
+    EN_VOICE = en.filter(function (v) { return /en[-_]US/i.test(v.lang || ""); })[0] || en[0] || null;
+  } catch (e) {}
+}
+if (window.speechSynthesis) {
+  pickVoice();
+  try { window.speechSynthesis.onvoiceschanged = pickVoice; } catch (e) {}
+}
+
+/* iOS 등에서 첫 소리가 나오도록, 시작 버튼을 누를 때 미리 한 번 깨워 둔다 */
+var _voiceWarmed = false;
+function warmUpVoice() {
+  if (_voiceWarmed || !window.speechSynthesis) return;
+  _voiceWarmed = true;
+  try {
+    var u = new SpeechSynthesisUtterance(" ");
+    u.volume = 0; u.lang = "en-US";
+    window.speechSynthesis.speak(u);
+  } catch (e) {}
+}
+
+function showSayBar(text) {
+  var t = document.getElementById("saytext");
+  if (t) t.textContent = text;
+  var bar = document.getElementById("saybar");
+  if (bar) bar.classList.remove("hidden");
+}
+function hideSayBar() {
+  var bar = document.getElementById("saybar");
+  if (bar) bar.classList.add("hidden");
+}
+function stopSpeaking() {
+  try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+  hideSayBar();
+}
+
+/* 정답 영어를 읽어 준 뒤 onDone 실행.
+   소리가 꺼져 있거나 브라우저가 지원하지 않으면 기다리지 않고 바로 넘어간다. */
+function speakAnswer(text, onDone) {
+  var done = false;
+  function finish() {
+    if (done) return;
+    done = true;
+    hideSayBar();
+    onDone();
+  }
+  if (!soundOn || !text || !window.speechSynthesis) { setTimeout(finish, 250); return; }
+  showSayBar(text);
+  try {
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    if (EN_VOICE) u.voice = EN_VOICE;
+    u.rate = 0.82;
+    u.pitch = 1;
+    u.onend = function () { setTimeout(finish, 400); };
+    u.onerror = finish;
+    window.speechSynthesis.speak(u);
+    /* 소리가 끝나지 않는 환경에서도 멈추지 않도록 하는 안전장치 */
+    setTimeout(finish, Math.min(11000, 2400 + text.length * 95));
+  } catch (e) { setTimeout(finish, 700); }
+}
+
+/* ══════════ 정답 음원 재생 (카톡 인앱 브라우저에서도 나오도록 파일 재생) ══════════ */
+function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+var AUDIO_EL = null;
+function getAudioEl() {
+  if (!AUDIO_EL) {
+    AUDIO_EL = new Audio();
+    AUDIO_EL.preload = "auto";
+  }
+  return AUDIO_EL;
+}
+function stopAudio() {
+  try { if (AUDIO_EL) { AUDIO_EL.pause(); AUDIO_EL.onended = null; AUDIO_EL.onerror = null; AUDIO_EL.onplaying = null; } } catch (e) {}
+}
+
+/* 정답 음원을 들려준 뒤 onDone 실행.
+   1순위 음원 파일 → 2순위 브라우저 읽기(TTS) → 3순위 그냥 넘어가기 */
+function playAnswer(file, text, onDone) {
+  var done = false;
+  function finish() {
+    if (done) return;
+    done = true;
+    stopAudio();
+    hideSayBar();
+    onDone();
+  }
+  if (!soundOn || !text) { setTimeout(finish, 250); return; }
+  showSayBar(text);
+
+  var usedFallback = false;
+  function fallback() {
+    if (done || usedFallback) return;
+    usedFallback = true;
+    stopAudio();
+    speakAnswer(text, finish);
+  }
+
+  var a = getAudioEl();
+  var startGuard = setTimeout(fallback, 2600);
+  try {
+    a.onplaying = function () { clearTimeout(startGuard); };
+    a.onended = function () { clearTimeout(startGuard); setTimeout(finish, 350); };
+    a.onerror = function () { clearTimeout(startGuard); fallback(); };
+    a.src = "audio/" + file + ".wav?v=1";
+    a.currentTime = 0;
+    var p = a.play();
+    if (p && p.catch) { p.catch(function () { clearTimeout(startGuard); fallback(); }); }
+  } catch (e) { clearTimeout(startGuard); fallback(); }
+
+  /* 어떤 경우에도 화면이 멈추지 않게 하는 최종 안전장치 */
+  setTimeout(finish, Math.min(13000, 4000 + text.length * 95));
+}
+
+/* ══════════ 진행 상태 ══════════ */
+var studentName = "";
+var current = 0;
+var answersLog = new Array(ALL.length).fill(null);
+var elapsed = new Array(NSEC).fill(0);
+var sent = new Array(NSEC).fill(false);
+var clinicSent = new Array(NSEC).fill(false);
+var lastTick = 0;
+var curSec = 0;
+var cardsShown = {};
+var pendingCard = 0;
+var MODE = "quiz";
+
+var clinicList = [];
+var clinicPos = 0;
+var clinicLog = [];
+var clinicSec = 0;
+
+var SAVE_KEY = "chajeongmin-basic-20260908";
+function saveState() {
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
+      v: 1, name: studentName, current: current, log: answersLog,
+      elapsed: elapsed, sent: sent, clinicSent: clinicSent, cards: cardsShown,
+      choices: ALL.map(function (q) { return q.shuffled || null; })
+    }));
+  } catch (e) {}
+}
+function loadState() {
+  try {
+    var s = JSON.parse(localStorage.getItem(SAVE_KEY));
+    return (s && s.v === 1 && s.name && s.log) ? s : null;
+  } catch (e) { return null; }
+}
+function clearState() { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} }
+
+var ALL_CARDS = ["start-card", "resume-card", "cards-card", "quiz-card", "sec-result-card",
+                 "clinic-why-card", "clinic-card", "clinic-result-card"];
+function show(id) {
+  stopSpeaking();
+  stopAudio();
+  ALL_CARDS.forEach(function (c) {
+    document.getElementById(c).classList.toggle("hidden", c !== id);
+  });
+  if (id === "start-card") refreshSectionButtons();
+  window.scrollTo(0, 0);
+}
+
+function secDone(si) {
+  var s = SECTIONS[si];
+  for (var i = s.start; i < s.end; i++) { if (!answersLog[i]) return false; }
+  return true;
+}
+function firstUndoneSec() {
+  for (var i = 0; i < NSEC; i++) { if (!secDone(i)) return i; }
+  return -1;
+}
+function refreshSectionButtons() {
+  var doneList = [];
+  secBtns.forEach(function (btn, si) {
+    var done = secDone(si);
+    btn.classList.toggle("done", done);
+    if (done) doneList.push(si + 1);
+  });
+  var note = document.getElementById("sec-done-note");
+  if (note) {
+    note.textContent = doneList.length
+      ? "다 푼 영역: " + doneList.join("영역, ") + "영역 (다시 눌러 복습할 수 있어요)"
+      : "";
+  }
+}
+
+/* ══════════ 카드 → 문제 2개 ══════════ */
+function step() {
+  var si = secIndex(current);
+  curSec = si;
+  if (CARD_AT[current] && !cardsShown[current]) { showCardScreen(current); }
+  else { MODE = "quiz"; show("quiz-card"); showQuestion(); }
+}
+function showCardScreen(i) {
+  pendingCard = i;
+  var sec = SECTIONS[curSec];
+  var title = CARD_AT[i];
+  var pos = sec.cards.indexOf(title) + 1;
+  document.getElementById("card-num").textContent = "개념 카드 " + pos + " / " + sec.cards.length;
+  document.getElementById("card-sec").textContent = sec.name.split(" · ")[0];
+  document.getElementById("card-bar").style.width = (pos / sec.cards.length * 100) + "%";
+  document.getElementById("cardbox").innerHTML = "<h2>" + title + "</h2>" + (TIPS[title] || "");
+  show("cards-card");
+}
+function afterCard() {
+  cardsShown[pendingCard] = true;
+  saveState();
+  MODE = "quiz";
+  show("quiz-card");
+  showQuestion();
+}
+document.getElementById("card-next").addEventListener("click", afterCard);
+document.getElementById("card-skip").addEventListener("click", afterCard);
+
+/* ══════════ 시작 / 이어하기 ══════════ */
+var nameInput = document.getElementById("name-input");
+var secBtns = [].slice.call(document.querySelectorAll(".sec-start"));
+var soundBox = document.getElementById("sound-on");
+if (soundBox) {
+  soundBox.checked = soundOn;
+  soundBox.addEventListener("change", function () {
+    soundOn = soundBox.checked;
+    try { localStorage.setItem(SOUND_KEY, soundOn ? "on" : "off"); } catch (e) {}
+    if (!soundOn) stopSpeaking();
+  });
+}
+var testBtn = document.getElementById("sound-test");
+var soundMsg = document.getElementById("sound-msg");
+function setMsg(txt, color) {
+  if (!soundMsg) return;
+  soundMsg.textContent = txt;
+  soundMsg.style.color = color;
+}
+if (testBtn) {
+  testBtn.addEventListener("click", function () {
+    warmUpVoice();
+    setMsg("소리를 내는 중이에요...", "#6B7B7E");
+    var a = getAudioEl();
+    var started = false;
+    a.onplaying = function () {
+      started = true;
+      setMsg("소리가 나오고 있어요! 안 들리면 휴대폰 볼륨을 올려 주세요.", "#2F7C83");
+    };
+    a.onended = function () {
+      if (started) setMsg("소리 확인 완료! 이제 시작해도 좋아요.", "#2F7C83");
+    };
+    a.onerror = function () {
+      setMsg("소리 파일을 못 불러왔어요. 아래 안내대로 다른 브라우저로 열어 주세요.", "#b5762f");
+    };
+    try {
+      a.src = "audio/test.wav?v=1";
+      a.currentTime = 0;
+      var p = a.play();
+      if (p && p.catch) {
+        p.catch(function () {
+          setMsg("브라우저가 소리를 막았어요. 아래 안내대로 다른 브라우저로 열어 주세요.", "#b5762f");
+        });
+      }
+    } catch (e) {
+      setMsg("소리를 재생할 수 없어요. 아래 안내대로 다른 브라우저로 열어 주세요.", "#b5762f");
+    }
+  });
+}
+function syncNameGate() {
+  var ok = nameInput.value.trim().length > 0;
+  secBtns.forEach(function (b) { b.disabled = !ok; });
+}
+nameInput.addEventListener("input", syncNameGate);
+nameInput.addEventListener("keydown", function (e) {
+  if (e.key === "Enter" && nameInput.value.trim()) secBtns[0].click();
+});
+function startSection(si) {
+  var typed = nameInput.value.trim();
+  if (!typed) { nameInput.focus(); return; }
+  studentName = typed;
+  warmUpVoice();
+  var s = SECTIONS[si];
+  for (var i = s.start; i < s.end; i++) { answersLog[i] = null; }
+  elapsed[si] = 0;
+  sent[si] = false;
+  clinicSent[si] = false;
+  Object.keys(CARD_AT).forEach(function (k) { if (+k >= s.start && +k < s.end) delete cardsShown[k]; });
+  current = s.start;
+  curSec = si;
+  lastTick = Date.now();
+  saveState();
+  step();
+}
+secBtns.forEach(function (b) {
+  b.addEventListener("click", function () { startSection(parseInt(b.getAttribute("data-sec"), 10)); });
+});
+
+var savedState = loadState();
+function applySaved(s) {
+  studentName = s.name;
+  current = s.current;
+  answersLog = (s.log || []).slice(0, ALL.length);
+  while (answersLog.length < ALL.length) answersLog.push(null);
+  elapsed = s.elapsed || new Array(NSEC).fill(0);
+  while (elapsed.length < NSEC) elapsed.push(0);
+  sent = s.sent || new Array(NSEC).fill(false);
+  while (sent.length < NSEC) sent.push(false);
+  clinicSent = s.clinicSent || new Array(NSEC).fill(false);
+  while (clinicSent.length < NSEC) clinicSent.push(false);
+  cardsShown = s.cards || {};
+  if (s.choices) {
+    ALL.forEach(function (q, i) { if (s.choices[i]) q.shuffled = s.choices[i]; });
+  }
+}
+if (savedState && savedState.log && savedState.log.some(function (l) { return !!l; })) {
+  var doneCnt = savedState.log.filter(function (l) { return !!l; }).length;
+  document.getElementById("resume-info").textContent =
+    savedState.name + " · " + doneCnt + "문제까지 푼 기록이 있어요. 이어서 풀까요?";
+  show("resume-card");
+} else {
+  syncNameGate();
+}
+document.getElementById("resume-btn").addEventListener("click", function () {
+  applySaved(savedState);
+  nameInput.value = studentName;
+  syncNameGate();
+  lastTick = Date.now();
+  curSec = secIndex(Math.min(current, ALL.length - 1));
+  var prevSec = current > 0 ? secIndex(current - 1) : -1;
+  if (prevSec >= 0 && current === SECTIONS[prevSec].end && secDone(prevSec)) {
+    showSectionResult(prevSec);
+  } else if (current >= ALL.length) {
+    showSectionResult(NSEC - 1);
+  } else { step(); }
+});
+document.getElementById("restart-btn").addEventListener("click", function () {
+  clearState();
+  answersLog = new Array(ALL.length).fill(null);
+  elapsed = new Array(NSEC).fill(0);
+  sent = new Array(NSEC).fill(false);
+  clinicSent = new Array(NSEC).fill(false);
+  cardsShown = {}; current = 0;
+  nameInput.value = "";
+  syncNameGate();
+  show("start-card");
+});
+document.getElementById("pick-sec-btn").addEventListener("click", function () {
+  nameInput.value = studentName; syncNameGate(); show("start-card");
+});
+document.getElementById("cr-pick-btn").addEventListener("click", function () {
+  nameInput.value = studentName; syncNameGate(); show("start-card");
+});
+
+/* ══════════ 낱말 배열(ord) ══════════ */
+function ordNorm(s) {
+  return String(s).toLowerCase().replace(/[.,?!;:]/g, "").replace(/\s+/g, " ").trim();
+}
+var ordPicked = [];
+function renderOrd(q, box) {
+  ordPicked = [];
+  var help = document.createElement("p");
+  help.className = "ord-help";
+  help.innerHTML = "아래 낱말을 <b>순서대로</b> 눌러 주세요. 잘못 눌렀으면 위쪽 칸의 낱말을 다시 눌러 뺄 수 있어요.";
+  var slot = document.createElement("div"); slot.className = "ord-slot";
+  var pool = document.createElement("div"); pool.className = "ord-pool";
+  var okBtn = document.createElement("button");
+  okBtn.className = "btn center"; okBtn.textContent = "다 골랐어요 · 확인하기"; okBtn.disabled = true;
+  var reBtn = document.createElement("button");
+  reBtn.className = "btn sub-btn center"; reBtn.textContent = "처음부터 다시 배열하기";
+  box.appendChild(help); box.appendChild(slot); box.appendChild(pool);
+  box.appendChild(okBtn); box.appendChild(reBtn);
+  function draw() {
+    slot.innerHTML = "";
+    if (ordPicked.length === 0) {
+      var ph = document.createElement("span");
+      ph.className = "ord-ph"; ph.textContent = "여기에 문장이 만들어져요";
+      slot.appendChild(ph);
+    }
+    ordPicked.forEach(function (ti, pos) {
+      var b = document.createElement("button");
+      b.className = "ord-tile picked"; b.textContent = q.tiles[ti];
+      b.addEventListener("click", function () { ordPicked.splice(pos, 1); draw(); });
+      slot.appendChild(b);
+    });
+    pool.innerHTML = "";
+    q.shuffled.forEach(function (ti) {
+      if (ordPicked.indexOf(ti) >= 0) return;
+      var b = document.createElement("button");
+      b.className = "ord-tile"; b.textContent = q.tiles[ti];
+      b.addEventListener("click", function () { ordPicked.push(ti); draw(); });
+      pool.appendChild(b);
+    });
+    okBtn.disabled = (ordPicked.length !== q.tiles.length);
+  }
+  reBtn.addEventListener("click", function () { ordPicked = []; draw(); });
+  okBtn.addEventListener("click", function () {
+    if (ordPicked.length !== q.tiles.length) return;
+    pick(ordPicked.map(function (ti) { return q.tiles[ti]; }).join(" "));
+  });
+  draw();
+}
+
+/* ══════════ 문제 표시 ══════════ */
+var CIRCLED = ["①", "②", "③", "④"];
+function showQuestion() {
+  var q = ALL[current];
+  var si = secIndex(current);
+  curSec = si;
+  var sec = SECTIONS[si];
+  document.getElementById("prog-num").textContent =
+    sec.name.split(" · ")[0] + "  ·  " + (current - sec.start + 1) + " / " + (sec.end - sec.start);
+  document.getElementById("prog-pct").textContent = "전체 " + Math.round(current / ALL.length * 100) + "%";
+  document.getElementById("bar-fill").style.width = ((current - sec.start) / (sec.end - sec.start) * 100) + "%";
+  document.getElementById("srctag").textContent = q.src;
+  document.getElementById("tipinner").innerHTML = "<b>" + q.src + "</b><br>" + (TIPS[q.src] || "");
+  document.getElementById("tipbox").open = false;
+  document.getElementById("qtext").innerHTML = "Q" + (current + 1) + ". " + q.q;
+  var box = document.getElementById("choices");
+  box.innerHTML = "";
+  document.getElementById("keyhint").classList.toggle("hidden", q.t === "ord");
+  if (q.t === "ord") { renderOrd(q, box); lastTick = Date.now(); window.scrollTo(0, 0); return; }
+  q.shuffled.forEach(function (c, i) {
+    var b = document.createElement("button");
+    b.className = "choice";
+    b.innerHTML = '<span class="num">' + CIRCLED[i] + "</span>" + c;
+    b.addEventListener("click", function () { pick(c); });
+    box.appendChild(b);
+  });
+  lastTick = Date.now();
+  window.scrollTo(0, 0);
+}
+
+document.addEventListener("keydown", function (e) {
+  var n = parseInt(e.key, 10);
+  if (!(n >= 1 && n <= 4)) return;
+  if (MODE === "quiz" && !document.getElementById("quiz-card").classList.contains("hidden")) {
+    var q = ALL[current];
+    if (q && q.shuffled && q.t !== "ord" && n <= q.shuffled.length) pick(q.shuffled[n - 1]);
+  } else if (MODE === "clinic" && !document.getElementById("clinic-card").classList.contains("hidden")) {
+    var cq = CLINIC[clinicList[clinicPos]];
+    if (cq && cq.shuffled && cq.t !== "ord" && n <= cq.shuffled.length) pick(cq.shuffled[n - 1]);
+  }
+});
+
+var locked = false;
+function pick(choice) {
+  if (locked) return; locked = true;
+  if (MODE === "clinic") { clinicAnswer(choice); return; }
+  var q = ALL[current];
+  var si = secIndex(current);
+  var ok = (q.t === "ord") ? (ordNorm(choice) === ordNorm(q.answer)) : (choice === q.answer);
+  answersLog[current] = { no: current + 1, ok: ok, chosen: choice, answer: q.answer };
+  elapsed[si] += Math.min(180, Math.round((Date.now() - lastTick) / 1000));
+  var qi = current;
+  current++;
+  saveState();
+  playAnswer("q" + pad2(qi + 1), q.say, function () {
+    locked = false;
+    if (current === SECTIONS[si].end) showSectionResult(si);
+    else step();
+  });
+}
+
+/* ══════════ 공통 도구 ══════════ */
+function copyText(btn, text, doneLabel) {
+  navigator.clipboard.writeText(text).then(function () {
+    btn.textContent = doneLabel;
+  }).catch(function () {
+    prompt("아래 내용을 길게 눌러 복사하세요", text);
+  });
+}
+function plain(s) { return String(s).replace(/<[^>]*>/g, ""); }
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+function secStats(si) {
+  var sec = SECTIONS[si];
+  var slice = answersLog.slice(sec.start, sec.end).filter(function (l) { return !!l; });
+  var score = slice.filter(function (l) { return l.ok; }).length;
+  var wrong = slice.filter(function (l) { return !l.ok; }).map(function (l) { return l.no; });
+  return { slice: slice, score: score, total: sec.end - sec.start, wrong: wrong };
+}
+function sectionMsg(si) {
+  var st = secStats(si);
+  return "[영핏 기초개념 다지기 " + (si + 1) + "/" + NSEC + " 결과]\n학생: " + studentName +
+         "\n영역: " + SECTIONS[si].name +
+         "\n점수: " + st.score + "/" + st.total +
+         "\n풀이 시간: " + Math.max(1, Math.round(elapsed[si] / 60)) + "분" +
+         "\n틀린 문항: " + (st.wrong.length ? st.wrong.join(", ") : "없음") +
+         "\n- 영핏 지나티처";
+}
+function totalMsg() {
+  var parts = SECTIONS.map(function (s, si) {
+    var st = secStats(si);
+    return (si + 1) + "영역 " + st.score + "/" + st.total;
+  });
+  var done = answersLog.filter(function (l) { return !!l; });
+  var totalScore = done.filter(function (l) { return l.ok; }).length;
+  var allWrong = done.filter(function (l) { return !l.ok; }).map(function (l) { return l.no; });
+  return "[영핏 기초개념 다지기 최종 결과]\n학생: " + studentName +
+         "\n내용: 시간 전치사 + VOCA DAY 29 (15문항)" +
+         "\n" + parts.join(" / ") +
+         "\n총점: " + totalScore + "/" + ALL.length +
+         "\n틀린 문항: " + (allWrong.length ? allWrong.join(", ") : "없음") +
+         "\n- 영핏 지나티처";
+}
+function clinicMsg() {
+  var score = clinicLog.filter(function (l) { return l && l.ok; }).length;
+  return "[영핏 오답 클리닉 결과]\n학생: " + studentName +
+         "\n영역: " + SECTIONS[clinicSec].name +
+         "\n클리닉 점수: " + score + "/" + clinicLog.length +
+         "\n다시 풀어 본 문항: " + clinicList.map(function (i) { return i + 1; }).join(", ") +
+         "\n- 영핏 지나티처";
+}
+
+/* ══════════ 영역 결과 ══════════ */
+function showSectionResult(si) {
+  MODE = "quiz";
+  var st = secStats(si);
+  var allDone = firstUndoneSec() === -1;
+  document.getElementById("sec-result-title").textContent =
+    allDone ? "모든 영역 완료! 정말 수고했어요" : (si + 1) + "영역 완료! 잘했어요";
+  document.getElementById("sec-score").textContent = st.score + " / " + st.total;
+  document.getElementById("sec-wrong").textContent =
+    st.wrong.length ? "틀린 문항: " + st.wrong.join(", ") + " — 아래 해설을 읽고 오답 클리닉으로 한 번 더 잡아요!"
+                    : "이 영역 전부 정답! 최고예요";
+
+  var copyBtn = document.getElementById("sec-copy-btn");
+  copyBtn.textContent = (si + 1) + "영역 결과 복사 (카톡용)";
+  copyBtn.onclick = function () { copyText(copyBtn, sectionMsg(si), "복사 완료! 카톡에 붙여넣기 하세요"); };
+
+  var clinicBtn = document.getElementById("clinic-start-btn");
+  if (st.wrong.length) {
+    clinicBtn.classList.remove("hidden");
+    clinicBtn.textContent = "오답 클리닉 시작 · " + st.wrong.length + "문제 다시 잡기";
+    clinicBtn.onclick = function () { startClinic(si); };
+  } else {
+    clinicBtn.classList.add("hidden");
+  }
+
+  var nextBtn = document.getElementById("next-sec-btn");
+  var nextSi = firstUndoneSec();
+  if (allDone) {
+    nextBtn.classList.add("hidden");
+    var totalScore = answersLog.filter(function (l) { return l && l.ok; }).length;
+    document.getElementById("total-block").classList.remove("hidden");
+    document.getElementById("total-score").textContent = totalScore + " / " + ALL.length;
+    document.getElementById("total-detail").textContent =
+      SECTIONS.map(function (s, idx) { var t = secStats(idx); return (idx + 1) + "영역 " + t.score + "/" + t.total; }).join("  ·  ");
+    var totalBtn = document.getElementById("total-copy-btn");
+    totalBtn.onclick = function () { copyText(totalBtn, totalMsg(), "복사 완료! 카톡에 붙여넣기 하세요"); };
+  } else {
+    nextBtn.classList.remove("hidden");
+    document.getElementById("total-block").classList.add("hidden");
+    nextBtn.textContent = "쉬었다가 " + (nextSi + 1) + "영역 개념 카드 보기";
+    nextBtn.onclick = function () { current = SECTIONS[nextSi].start; curSec = nextSi; lastTick = Date.now(); saveState(); step(); };
+  }
+
+  var expBox = document.getElementById("sec-explanations");
+  expBox.innerHTML = "";
+  st.slice.forEach(function (log) {
+    var q = ALL[log.no - 1];
+    var d = document.createElement("div");
+    d.className = "exp" + (log.ok ? "" : " wrong");
+    var ansLine = log.ok ? "" :
+      '<span class="ans-line">내가 고른 답: ' + esc(plain(log.chosen)) + " → 정답: " + esc(plain(q.answer)) + "</span>";
+    d.innerHTML = '<div class="exp-head"><b>Q' + log.no + " " +
+      (log.ok ? "정답!" : "오답 - 다시 보기") + "</b></div>" + ansLine + q.exp;
+    expBox.appendChild(d);
+  });
+
+  if (!sent[si]) {
+    sent[si] = true;
+    saveState();
+    engfitSubmit({
+      quizId: "basic-cjm-0908-p" + (si + 1),
+      quizTitle: "차정민 기초개념 다지기 9/8 — " + (si + 1) + "영역",
+      student: studentName,
+      score: st.score,
+      total: st.total,
+      wrong: st.wrong,
+      durationSec: elapsed[si],
+      detail: st.slice
+    });
+  }
+  show("sec-result-card");
+}
+
+/* ══════════ 오답 클리닉 ══════════ */
+function startClinic(si) {
+  clinicSec = si;
+  var st = secStats(si);
+  clinicList = st.wrong.map(function (no) { return no - 1; });
+  clinicPos = 0;
+  clinicLog = [];
+  MODE = "clinic";
+  lastTick = Date.now();
+  showWhy();
+}
+function showWhy() {
+  var idx = clinicList[clinicPos];
+  var q = ALL[idx];
+  var log = answersLog[idx];
+  document.getElementById("why-num").textContent =
+    "왜 틀렸을까?  " + (clinicPos + 1) + " / " + clinicList.length;
+  document.getElementById("why-bar").style.width = (clinicPos / clinicList.length * 100) + "%";
+  document.getElementById("whybox").innerHTML =
+    "<h2>Q" + (idx + 1) + " · 왜 틀렸을까?</h2>" +
+    '<span class="row"><span class="k">문제</span><br>' + q.q + "</span>" +
+    '<span class="row"><span class="k">내가 고른 답</span> ' + esc(plain(log ? log.chosen : "")) + "<br>" +
+    '<span class="k">정답</span> ' + esc(plain(q.answer)) + "</span>" +
+    q.exp;
+  document.getElementById("rulebox").innerHTML =
+    '<span class="h">규칙 다시 보기 — ' + q.src + "</span>" + (TIPS[q.src] || "");
+  show("clinic-why-card");
+}
+document.getElementById("why-next").addEventListener("click", function () {
+  MODE = "clinic";
+  show("clinic-card");
+  showClinicQuestion();
+});
+function showClinicQuestion() {
+  var idx = clinicList[clinicPos];
+  var cq = CLINIC[idx];
+  document.getElementById("cq-num").textContent =
+    "클리닉 문제  " + (clinicPos + 1) + " / " + clinicList.length;
+  document.getElementById("cq-bar").style.width = ((clinicPos + 0.5) / clinicList.length * 100) + "%";
+  document.getElementById("cq-src").textContent = "Q" + (idx + 1) + " 같은 개념 · " + ALL[idx].src;
+  document.getElementById("cq-text").innerHTML = cq.q;
+  var box = document.getElementById("cq-choices");
+  box.innerHTML = "";
+  document.getElementById("cq-keyhint").classList.toggle("hidden", cq.t === "ord");
+  if (cq.t === "ord") { renderOrd(cq, box); lastTick = Date.now(); window.scrollTo(0, 0); return; }
+  cq.shuffled.forEach(function (c, i) {
+    var b = document.createElement("button");
+    b.className = "choice";
+    b.innerHTML = '<span class="num">' + CIRCLED[i] + "</span>" + c;
+    b.addEventListener("click", function () { pick(c); });
+    box.appendChild(b);
+  });
+  lastTick = Date.now();
+  window.scrollTo(0, 0);
+}
+function clinicAnswer(choice) {
+  var idx = clinicList[clinicPos];
+  var cq = CLINIC[idx];
+  var ok = (cq.t === "ord") ? (ordNorm(choice) === ordNorm(cq.answer)) : (choice === cq.answer);
+  clinicLog.push({ no: idx + 1, ok: ok, chosen: choice, answer: cq.answer });
+  clinicPos++;
+  playAnswer("c" + pad2(idx + 1), cq.say, function () {
+    locked = false;
+    if (clinicPos >= clinicList.length) showClinicResult();
+    else showWhy();
+  });
+}
+function showClinicResult() {
+  MODE = "quiz";
+  var score = clinicLog.filter(function (l) { return l.ok; }).length;
+  var total = clinicLog.length;
+  document.getElementById("cr-score").textContent = score + " / " + total;
+  document.getElementById("cr-title").textContent =
+    (score === total) ? "오답 클리닉 전부 정답! 완벽해요" : "오답 클리닉 완료! 수고했어요";
+  document.getElementById("cr-msg").textContent =
+    (score === total)
+      ? "틀렸던 곳을 전부 다시 잡았어요. 이제 이 개념은 정민이 것이에요!"
+      : "한 번 더 보면 확실해져요. 아래 해설을 소리 내어 읽어 보세요.";
+
+  var crCopy = document.getElementById("cr-copy-btn");
+  crCopy.textContent = "클리닉 결과 복사 (카톡용)";
+  crCopy.onclick = function () { copyText(crCopy, clinicMsg(), "복사 완료! 카톡에 붙여넣기 하세요"); };
+
+  var nextSi = firstUndoneSec();
+  var crNext = document.getElementById("cr-next-btn");
+  if (nextSi === -1) {
+    crNext.textContent = "영역 결과 화면으로 돌아가기";
+    crNext.onclick = function () { showSectionResult(clinicSec); };
+  } else {
+    crNext.textContent = "쉬었다가 " + (nextSi + 1) + "영역 개념 카드 보기";
+    crNext.onclick = function () { current = SECTIONS[nextSi].start; curSec = nextSi; lastTick = Date.now(); saveState(); step(); };
+  }
+
+  var box = document.getElementById("cr-explanations");
+  box.innerHTML = "";
+  clinicLog.forEach(function (log, i) {
+    var idx = clinicList[i];
+    var cq = CLINIC[idx];
+    var d = document.createElement("div");
+    d.className = "exp" + (log.ok ? "" : " wrong");
+    var ansLine = log.ok ? "" :
+      '<span class="ans-line">내가 고른 답: ' + esc(plain(log.chosen)) + " → 정답: " + esc(plain(cq.answer)) + "</span>";
+    d.innerHTML = '<div class="exp-head"><b>Q' + (idx + 1) + " 클리닉 " +
+      (log.ok ? "정답!" : "다시 보기") + "</b></div>" + ansLine + cq.exp;
+    box.appendChild(d);
+  });
+
+  if (!clinicSent[clinicSec]) {
+    clinicSent[clinicSec] = true;
+    saveState();
+    engfitSubmit({
+      quizId: "basic-cjm-0908-p" + (clinicSec + 1) + "-clinic",
+      quizTitle: "차정민 오답 클리닉 9/8 — " + (clinicSec + 1) + "영역",
+      student: studentName,
+      score: score,
+      total: total,
+      wrong: clinicLog.filter(function (l) { return !l.ok; }).map(function (l) { return l.no; }),
+      durationSec: 0,
+      detail: clinicLog
+    });
+  }
+  show("clinic-result-card");
+}
+</script>
+</body>
+</html>
